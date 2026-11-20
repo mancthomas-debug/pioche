@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pioche</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Pioche">
+<meta name="theme-color" content="#f6f3ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#151412" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <h1>Pioche</h1>
+  <button id="btn-settings" class="icon-btn" aria-label="Réglages">⚙︎</button>
+</header>
+
+<main id="view-list">
+  <input id="search" type="search" placeholder="Rechercher dans ma liste…" autocomplete="off">
+  <div id="cat-chips" class="chips"></div>
+  <div class="seg" id="status-seg">
+    <button data-s="a_decouvrir" class="on">À découvrir</button>
+    <button data-s="en_cours">En cours</button>
+    <button data-s="fait">Fait</button>
+  </div>
+  <ul id="list" class="cards"></ul>
+  <p id="empty" class="empty" hidden>Rien ici pour l'instant. Touchez + pour piocher une idée.</p>
+</main>
+
+<button id="fab" class="fab" aria-label="Ajouter">+</button>
+
+<!-- Ajout -->
+<dialog id="dlg-add" class="sheet">
+  <div class="sheet-head">
+    <button class="link" data-close>Annuler</button>
+    <strong>Ajouter</strong>
+    <span></span>
+  </div>
+  <div id="add-cats" class="chips wrap"></div>
+  <input id="add-title" type="search" placeholder="Titre…" autocomplete="off" enterkeyhint="search">
+  <input id="add-source" type="text" placeholder="Conseillé par / source (facultatif)">
+  <input id="add-link" type="url" placeholder="Coller un lien (billetterie, site…)" hidden>
+  <p id="add-msg" class="msg"></p>
+  <ul id="results" class="results"></ul>
+  <button id="add-manual" class="btn secondary">Ajouter sans recherche</button>
+</dialog>
+
+<!-- Détail / édition -->
+<dialog id="dlg-detail" class="sheet tall">
+  <div class="sheet-head">
+    <button class="link" data-close>Fermer</button>
+    <strong id="detail-cat"></strong>
+    <button class="link" id="btn-edit">Modifier</button>
+  </div>
+  <div id="detail-body"></div>
+</dialog>
+
+<dialog id="dlg-edit" class="sheet tall">
+  <div class="sheet-head">
+    <button class="link" data-close>Annuler</button>
+    <strong>Modifier</strong>
+    <button class="link strong" id="btn-save">OK</button>
+  </div>
+  <form id="edit-form" class="form"></form>
+</dialog>
+
+<!-- Réglages -->
+<dialog id="dlg-settings" class="sheet tall">
+  <div class="sheet-head">
+    <span></span><strong>Réglages</strong>
+    <button class="link strong" data-close>OK</button>
+  </div>
+  <div class="form">
+    <label>Clé API TMDB (v3) ou jeton de lecture (v4)
+      <input id="tmdb-key" type="password" autocomplete="off" placeholder="Collez votre clé">
+    </label>
+    <p class="hint">Gratuite sur themoviedb.org → Paramètres → API. Stockée uniquement sur cet appareil.</p>
+    <label>Clé Google Books (facultative)
+      <input id="gbooks-key" type="password" autocomplete="off" placeholder="Pour les résumés de livres">
+    </label>
+    <p class="hint">Les livres sont cherchés dans le catalogue de la BnF. Une clé Google Books (gratuite, console.cloud.google.com) ajoute résumés et couvertures en plus.</p>
+    <h3>Sauvegarde</h3>
+    <button id="btn-export" class="btn">Exporter (partager le fichier)</button>
+    <button id="btn-copy" class="btn secondary">Copier le JSON</button>
+    <label class="btn secondary file">Importer un fichier JSON
+      <input id="import-file" type="file" accept="application/json,.json" hidden>
+    </label>
+    <textarea id="import-text" rows="3" placeholder="…ou collez le JSON ici"></textarea>
+    <button id="btn-import-text" class="btn secondary">Importer le texte collé</button>
+    <p id="settings-msg" class="msg"></p>
+    <p class="hint" id="storage-info"></p>
+  </div>
+</dialog>
+
+<div id="toast" class="toast" hidden></div>
+<script src="app.js"></script>
+</body>
+</html>
